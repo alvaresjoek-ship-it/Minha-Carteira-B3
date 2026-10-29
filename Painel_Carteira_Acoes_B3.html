@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Carteira Pro | Ações B3</title>
+<style>
+:root{font-family:Inter,Segoe UI,Arial,sans-serif;color:#e8f0fa;background:#0b1322}*{box-sizing:border-box}body{margin:0}header{background:#101e33;border-bottom:1px solid #263a51;padding:22px max(20px,calc((100% - 1240px)/2))}header h1{margin:0;font-size:26px}header p{color:#94a9bf;margin:8px 0 0}.wrap{max-width:1240px;margin:auto;padding:25px 18px}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px}.card,.panel{background:#142239;border:1px solid #29405c;border-radius:15px;padding:20px;box-shadow:0 10px 25px #0002}.label{color:#9db1c7;font-size:13px}.value{font-size:27px;font-weight:750;margin-top:10px}.green{color:#39d6a3}.red{color:#ff7f89}h2{font-size:18px;margin:0 0 17px}.panel{margin-top:18px}.form{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;align-items:end}label{display:block;color:#b4c4d5;font-size:12px;margin-bottom:5px}input,select,button{width:100%;border-radius:9px;border:1px solid #37506b;padding:11px;background:#0c1729;color:#f4f8ff;font:inherit}input:focus{outline:2px solid #24b6bb}button{background:#078d9c;border:0;font-weight:700;cursor:pointer}button:hover{filter:brightness(1.13)}button.alt{background:#304660}button.danger{background:#743a48}button.tiny{padding:6px 10px;font-size:12px;width:auto}.actions{display:flex;gap:10px;flex-wrap:wrap}.actions button{width:auto}table{border-collapse:collapse;width:100%;min-width:850px}th,td{padding:13px 10px;text-align:left;border-bottom:1px solid #2a3b51;font-size:13px}th{color:#a6bfd4;font-weight:600}td{color:#e5edf6}.scroll{overflow-x:auto}.muted{color:#93a8bc;font-size:12px;line-height:1.6}.status{padding:10px 14px;background:#0d1a2e;border-radius:9px;margin-top:12px;font-size:13px}.row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.chip{display:inline-block;padding:4px 8px;border-radius:6px;background:#284660;color:#c7e3f1;font-size:11px}.warn{color:#f7ca79}@media(max-width:950px){.grid{grid-template-columns:repeat(2,1fr)}.form{grid-template-columns:repeat(3,1fr)}}@media(max-width:560px){.grid{grid-template-columns:1fr}.form{grid-template-columns:repeat(2,1fr)}.value{font-size:24px}}
+</style></head><body>
+<header><h1>◈ Carteira Pro <span style="color:#2cd6c7">B3</span></h1><p>Controle de ações • preço médio • cotações • impostos estimados • cenários</p></header>
+<main class="wrap">
+<section class="grid">
+<div class="card"><div class="label">Patrimônio atual</div><div class="value" id="wealth">—</div></div>
+<div class="card"><div class="label">Custo das posições</div><div class="value" id="cost">—</div></div>
+<div class="card"><div class="label">Resultado não realizado</div><div class="value" id="unreal">—</div></div>
+<div class="card"><div class="label">Resultado realizado</div><div class="value" id="realized">—</div></div>
+</section>
+<section class="panel"><div class="row"><h2>📡 Atualização de cotações</h2><span class="chip" id="last">Sem atualização</span></div>
+<div class="form">
+<div style="grid-column:span 3"><label>Token da API brapi.dev (opcional para tickers disponíveis sem token)</label><input id="token" type="password" placeholder="Cole seu token para consultar outros tickers"></div>
+<div><label>Intervalo automático</label><select id="interval"><option value="0">Desativado</option><option value="5">5 minutos</option><option value="15" selected>15 minutos</option><option value="30">30 minutos</option></select></div>
+<div><button id="refresh">↻ Atualizar agora</button></div><div><button class="alt" id="saveApi">Salvar configurações</button></div>
+</div><div class="status" id="status">Informe seu token, se necessário, e clique em Atualizar agora. A consulta depende da disponibilidade da API e do acesso à internet.</div>
+<p class="muted">As cotações podem ter atraso. O token fica salvo somente no armazenamento deste navegador; evite usar em computador compartilhado. Se a API bloquear requisições feitas diretamente do arquivo HTML, abra-o por um servidor local ou hospedagem HTTPS. Sem cotação válida, o sistema não inventa preços.</p>
+</section>
+<section class="panel"><h2>➕ Registrar compra ou venda</h2><form id="tradeForm" class="form">
+<div><label>Data</label><input type="date" id="date" required></div><div><label>Ticker</label><input id="ticker" value="AMER3" maxlength="12" required></div>
+<div><label>Operação</label><select id="side"><option>Compra</option><option>Venda</option></select></div>
+<div><label>Quantidade</label><input id="qty" type="number" min="1" step="1" required></div>
+<div><label>Preço unitário (R$)</label><input id="price" type="number" min="0.01" step="0.0001" required></div>
+<div><label>Custos/taxas (R$)</label><input id="fees" type="number" min="0" step="0.01" value="0" required></div>
+<div style="grid-column:span 2"><button>Salvar operação</button></div>
+</form><p class="muted">Lance operações em ordem cronológica. O cálculo usa custo médio móvel para operações comuns. Day trade e eventos societários exigem apuração própria.</p></section>
+<section class="panel"><h2>💼 Posições da carteira</h2><div class="scroll"><table><thead><tr><th>Ativo</th><th>Qtd.</th><th>Preço médio</th><th>Última cotação</th><th>Patrimônio</th><th>Resultado</th><th>Retorno</th><th>Ação</th></tr></thead><tbody id="positions"></tbody></table></div>
+<p class="muted">Cotação manual: utilize o botão “Editar cotação” para lançar um preço de referência, caso a consulta automática não esteja disponível.</p></section>
+<section class="panel"><h2>🎯 Simulador de preço-alvo</h2><div class="form"><div><label>Ativo</label><input id="targetTicker" value="AMER3"></div><div><label>Preço-alvo (R$)</label><input id="targetPrice" type="number" value="12" min="0" step="0.01"></div><div><button id="simulate" type="button">Simular</button></div></div><div id="simulation" class="status"></div></section>
+<section class="panel"><h2>🧾 Estimativa de impostos — operações comuns</h2><div class="form"><div><label>Mês de referência</label><input type="month" id="taxMonth"></div><div><label>Prejuízo acumulado anterior (R$)</label><input type="number" id="loss" min="0" value="0" step="0.01"></div><div><label>IRRF compensável (R$)</label><input type="number" id="withheld" min="0" value="0" step="0.01"></div><div><button id="taxCalc" type="button">Calcular estimativa</button></div></div><div class="status" id="taxResult"></div><p class="muted warn">A isenção de até R$ 20 mil em vendas mensais de ações no mercado à vista depende da elegibilidade das operações. O sistema não apura day trade, ETFs, FIIs, BDRs, exterior, eventos societários ou todas as compensações fiscais. Não use esta estimativa como DARF sem conferência profissional.</p></section>
+<section class="panel"><div class="row"><h2>📋 Histórico de operações</h2><div class="actions"><button class="alt" id="export">Exportar backup JSON</button><button class="alt" id="csv">Exportar CSV</button><button class="alt" id="importBtn">Importar backup</button><input type="file" id="importFile" accept=".json" hidden><button class="danger" id="clear">Limpar dados</button></div></div><div class="scroll"><table><thead><tr><th>Data</th><th>Ativo</th><th>Tipo</th><th>Quantidade</th><th>Preço</th><th>Custos</th><th>Total</th><th>Resultado realizado</th><th>Ação</th></tr></thead><tbody id="history"></tbody></table></div></section>
+<p class="muted">Dados salvos no localStorage deste navegador. Faça backups periódicos: limpar o navegador ou usar outro dispositivo pode apagar ou ocultar seus registros. Este painel é informativo e não substitui extratos da corretora nem assessoria tributária.</p>
+</main>
+<script>
+const $=id=>document.getElementById(id), BRL=n=>Number(n).toLocaleString('pt-BR',{style:'currency',currency:'BRL'}), NUM=n=>Number(n).toLocaleString('pt-BR',{maximumFractionDigits:2}), key='carteira-pro-b3-v1';
+let state={trades:[],quotes:{},token:'',interval:15},timer=null;
+try{const saved=JSON.parse(localStorage.getItem(key));if(saved&&Array.isArray(saved.trades))state={...state,...saved}}catch{}
+const persist=()=>localStorage.setItem(key,JSON.stringify(state));
+const safe=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const ticker=s=>String(s).trim().toUpperCase().replace(/[^A-Z0-9]/g,'');
+const sorted=()=>[...state.trades].sort((a,b)=>a.date.localeCompare(b.date)||a.id-b.id);
+function calc(){
+ let positions={}, results={}, perTrade={};
+ for(const t of sorted()){
+  const p=positions[t.ticker]??={qty:0,cost:0};let realized=0;
+  if(t.side==='Compra'){p.qty+=t.qty;p.cost+=t.qty*t.price+t.fees}
+  else{const avg=p.qty? p.cost/p.qty:0;realized=t.qty*t.price-t.fees-t.qty*avg;p.qty-=t.qty;p.cost-=t.qty*avg;if(p.qty===0)p.cost=0;results[t.ticker]=(results[t.ticker]||0)+realized}
+  perTrade[t.id]=realized;
+ }
+ return {positions,results,perTrade};
+}
+function render(){
+ const {positions,results,perTrade}=calc();let wealth=0,cost=0,unreal=0,missing=false;
+ $('positions').innerHTML=Object.entries(positions).filter(([k,p])=>p.qty>0).map(([k,p])=>{
+ const q=state.quotes[k],current=q?.price,known=Number.isFinite(current);let value=known?p.qty*current:null, gain=known?value-p.cost:null;
+ cost+=p.cost;if(known){wealth+=value;unreal+=gain}else missing=true;
+ return `<tr><td><strong>${safe(k)}</strong></td><td>${NUM(p.qty)}</td><td>${BRL(p.cost/p.qty)}</td><td>${known?BRL(current):'Sem cotação'}<br><span class="muted">${q?.source||''}</span></td><td>${known?BRL(value):'—'}</td><td class="${gain>=0?'green':'red'}">${known?BRL(gain):'—'}</td><td>${known?(gain/p.cost*100).toFixed(2)+'%':'—'}</td><td><button class="tiny alt" data-quote="${safe(k)}">Editar cotação</button></td></tr>`
+ }).join('')||'<tr><td colspan="8">Nenhuma posição registrada. Cadastre sua primeira compra acima.</td></tr>';
+ $('wealth').textContent=missing?'Parcial: '+BRL(wealth):BRL(wealth);
+ $('cost').textContent=BRL(cost);$('unreal').textContent=missing?'Parcial: '+BRL(unreal):BRL(unreal);
+ $('realized').textContent=BRL(Object.values(results).reduce((a,b)=>a+b,0));
+ $('history').innerHTML=sorted().slice().reverse().map(t=>`<tr><td>${safe(t.date)}</td><td>${safe(t.ticker)}</td><td>${safe(t.side)}</td><td>${t.qty}</td><td>${BRL(t.price)}</td><td>${BRL(t.fees)}</td><td>${BRL(t.qty*t.price+(t.side==='Compra'?t.fees:-t.fees))}</td><td>${t.side==='Venda'?BRL(perTrade[t.id]):'—'}</td><td><button class="tiny danger" data-del="${t.id}">Excluir</button></td></tr>`).join('')||'<tr><td colspan="9">Nenhuma operação cadastrada.</td></tr>';
+ simulate();
+}
+function validSequence(trades){
+ let p={};for(const t of [...trades].sort((a,b)=>a.date.localeCompare(b.date)||a.id-b.id)){
+ p[t.ticker]=(p[t.ticker]||0)+(t.side==='Compra'?t.qty:-t.qty);
+ if(p[t.ticker]<0)return false;
+ }return true;
+}
+$('tradeForm').onsubmit=e=>{
+ e.preventDefault();const t={id:Date.now()+Math.random(),date:$('date').value,ticker:ticker($('ticker').value),side:$('side').value,qty:Number($('qty').value),price:Number($('price').value),fees:Number($('fees').value)};
+ if(!t.ticker||!Number.isInteger(t.qty)||t.qty<=0||t.price<=0||t.fees<0){alert('Confira os dados da operação.');return}
+ if(!validSequence([...state.trades,t])){alert('Venda superior à quantidade disponível na data.');return}
+ state.trades.push(t);persist();render();$('qty').value='';$('price').value='';$('fees').value='0';
+};
+$('history').onclick=e=>{let id=e.target.dataset.del;if(!id)return;if(!confirm('Excluir esta operação?'))return;let newer=state.trades.filter(t=>String(t.id)!==id);if(!validSequence(newer)){alert('Exclusão geraria saldo negativo em outra operação.');return}state.trades=newer;persist();render()};
+$('positions').onclick=e=>{const k=e.target.dataset.quote;if(!k)return;let v=prompt(`Cotação manual de ${k} (R$):`,state.quotes[k]?.price||'');if(v===null)return;let n=Number(v.replace(',','.'));if(!(n>0)){alert('Cotação inválida.');return}state.quotes[k]={price:n,source:'Manual',at:new Date().toISOString()};persist();render()};
+async function refresh(){
+ const symbols=Object.keys(calc().positions).filter(k=>calc().positions[k].qty>0);
+ if(!symbols.length){$('status').textContent='Cadastre uma compra para consultar as cotações.';return}
+ $('status').textContent='Consultando cotações...';$('refresh').disabled=true;
+ let ok=[],fail=[];
+ for(const k of symbols){
+  try{
+   const url='https://brapi.dev/api/quote/'+encodeURIComponent(k)+(state.token?'?token='+encodeURIComponent(state.token):'');
+   const resp=await fetch(url,{headers:{Accept:'application/json'},signal:AbortSignal.timeout(12000)});
+   if(!resp.ok)throw Error('HTTP '+resp.status);
+   const data=await resp.json(),v=Number(data.results?.[0]?.regularMarketPrice);
+   if(!Number.isFinite(v)||v<=0)throw Error('cotação indisponível');
+   state.quotes[k]={price:v,source:'brapi.dev',at:new Date().toISOString()};ok.push(k);
+  }catch(e){fail.push(k+': '+e.message)}
+ }
+ persist();render();$('last').textContent='Consulta: '+new Date().toLocaleString('pt-BR');
+ $('status').textContent=`Atualizados: ${ok.join(', ')||'nenhum'}. ${fail.length?'Falhas: '+fail.join(' | '):''}`;
+ $('refresh').disabled=false;
+}
+function configure(){clearInterval(timer);state.interval=Number($('interval').value);state.token=$('token').value.trim();persist();if(state.interval>0)timer=setInterval(refresh,state.interval*60000)}
+$('saveApi').onclick=()=>{configure();$('status').textContent='Configurações salvas. Clique em Atualizar agora para testar.'};
+$('refresh').onclick=refresh;
+function simulate(){
+ const k=ticker($('targetTicker').value),price=Number($('targetPrice').value),p=calc().positions[k];
+ if(!p||p.qty<=0||price<0){$('simulation').textContent='Registre uma compra do ativo para calcular a simulação.';return}
+ const val=p.qty*price,gain=val-p.cost;
+ $('simulation').innerHTML=`<strong>${safe(k)}</strong> · ${NUM(p.qty)} ações · preço-alvo ${BRL(price)}<br>Valor projetado: <strong>${BRL(val)}</strong> · Ganho/perda bruto(a): <strong class="${gain>=0?'green':'red'}">${BRL(gain)}</strong> · Retorno: ${((gain/p.cost)*100).toFixed(2)}% <span class="muted">(antes de tributos)</span>`;
+}
+$('simulate').onclick=simulate;
+function calcTax(){
+ const m=$('taxMonth').value,{perTrade}=calc();const trades=state.trades.filter(t=>t.side==='Venda'&&t.date.startsWith(m));
+ const sales=trades.reduce((a,t)=>a+t.qty*t.price,0),gain=trades.reduce((a,t)=>a+perTrade[t.id],0);
+ const exempt=sales<=20000,loss=Number($('loss').value)||0,withheld=Number($('withheld').value)||0;
+ const taxable=exempt?0:Math.max(0,gain-loss),due=Math.max(0,taxable*.15-withheld);
+ $('taxResult').innerHTML=`Vendas no mês: <strong>${BRL(sales)}</strong> · Resultado: <strong>${BRL(gain)}</strong> · Possível isenção: <strong>${exempt?'Sim, se elegível':'Não'}</strong><br>Base tributável estimada: <strong>${BRL(taxable)}</strong> · IR estimado (15% menos IRRF informado): <strong>${BRL(due)}</strong><br><span class="muted">Prejuízos, ganhos isentos e IRRF devem ser conciliados com os controles fiscais e notas de corretagem. Esta estimativa pressupõe somente operações comuns elegíveis.</span>`;
+}
+$('taxCalc').onclick=calcTax;
+function download(name,content,type){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([content],{type}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+$('export').onclick=()=>download('carteira-b3-backup.json',JSON.stringify({...state,token:''},null,2),'application/json');
+$('csv').onclick=()=>{let lines=['Data;Ticker;Operacao;Quantidade;Preco;Custos',...sorted().map(t=>[t.date,t.ticker,t.side,t.qty,t.price,t.fees].join(';'))];download('operacoes-b3.csv','\ufeff'+lines.join('\n'),'text/csv;charset=utf-8')};
+$('importBtn').onclick=()=>$('importFile').click();
+$('importFile').onchange=async e=>{try{const d=JSON.parse(await e.target.files[0].text());if(!Array.isArray(d.trades)||!validSequence(d.trades))throw Error('Arquivo inválido');if(!confirm('Substituir todos os registros atuais pelo backup?'))return;state={...state,trades:d.trades,quotes:d.quotes||{}};persist();render()}catch(err){alert('Não foi possível importar: '+err.message)}e.target.value=''};
+$('clear').onclick=()=>{if(confirm('Apagar todos os lançamentos e cotações deste navegador?')){state.trades=[];state.quotes={};persist();render()}};
+$('date').value=new Date().toLocaleDateString('en-CA');$('taxMonth').value=new Date().toLocaleDateString('en-CA').slice(0,7);$('token').value=state.token;$('interval').value=String(state.interval);configure();render();
+</script></body></html>
