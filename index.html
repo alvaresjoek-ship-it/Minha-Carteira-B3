@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Minha Carteira B3</title>
+<meta content="#101e33" name="theme-color"/>
+<meta content="Controle suas ações da B3, preço médio, operações e cotações." name="description"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<link href="./manifest.webmanifest" rel="manifest"/>
+<link href="./icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
+<link href="./icon-192.png" rel="apple-touch-icon"/>
+<style>
+:root{font-family:Inter,Segoe UI,Arial,sans-serif;color:#e8f0fa;background:#0b1322}*{box-sizing:border-box}body{margin:0}header{background:#101e33;border-bottom:1px solid #263a51;padding:22px max(20px,calc((100% - 1240px)/2))}header h1{margin:0;font-size:26px}header p{color:#94a9bf;margin:8px 0 0}.wrap{max-width:1240px;margin:auto;padding:25px 18px}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px}.card,.panel{background:#142239;border:1px solid #29405c;border-radius:15px;padding:20px;box-shadow:0 10px 25px #0002}.label{color:#9db1c7;font-size:13px}.value{font-size:27px;font-weight:750;margin-top:10px}.green{color:#39d6a3}.red{color:#ff7f89}h2{font-size:18px;margin:0 0 17px}.panel{margin-top:18px}.form{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;align-items:end}label{display:block;color:#b4c4d5;font-size:12px;margin-bottom:5px}input,select,button{width:100%;border-radius:9px;border:1px solid #37506b;padding:11px;background:#0c1729;color:#f4f8ff;font:inherit}input:focus{outline:2px solid #24b6bb}button{background:#078d9c;border:0;font-weight:700;cursor:pointer}button:hover{filter:brightness(1.13)}button.alt{background:#304660}button.danger{background:#743a48}button.tiny{padding:6px 10px;font-size:12px;width:auto}.actions{display:flex;gap:10px;flex-wrap:wrap}.actions button{width:auto}table{border-collapse:collapse;width:100%;min-width:850px}th,td{padding:13px 10px;text-align:left;border-bottom:1px solid #2a3b51;font-size:13px}th{color:#a6bfd4;font-weight:600}td{color:#e5edf6}.scroll{overflow-x:auto}.muted{color:#93a8bc;font-size:12px;line-height:1.6}.status{padding:10px 14px;background:#0d1a2e;border-radius:9px;margin-top:12px;font-size:13px}.row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.chip{display:inline-block;padding:4px 8px;border-radius:6px;background:#284660;color:#c7e3f1;font-size:11px}.warn{color:#f7ca79}@media(max-width:950px){.grid{grid-template-columns:repeat(2,1fr)}.form{grid-template-columns:repeat(3,1fr)}}@media(max-width:560px){.grid{grid-template-columns:1fr}.form{grid-template-columns:repeat(2,1fr)}.value{font-size:24px}}
+
+/* Profissional v2 — visual responsivo */
+:root{font-family:Inter,system-ui,Segoe UI,Arial,sans-serif;background:#07111e;color:#eaf2fc}
+body{background:radial-gradient(ellipse at 15% 0%,#123050 0%,#07111e 36%,#07111e 100%);min-height:100vh}
+.app-header{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:21px max(20px,calc((100% - 1240px)/2));background:#081728e8;border-bottom:1px solid #213954}
+.brand{display:flex;align-items:center;gap:13px}.brandmark{display:grid;place-items:center;width:46px;height:46px;background:linear-gradient(145deg,#0786df,#124978);border-radius:14px;font-size:29px;color:#fff;box-shadow:0 4px 20px #048dce44}
+header h1{font-size:21px;letter-spacing:-.5px}header p{font-size:12px}.live-pill{background:#0d302e;color:#4ce3bd;padding:9px 12px;border-radius:30px;font-size:12px;border:1px solid #1a6a5a}
+.top-nav{display:flex;justify-content:center;gap:8px;background:#0b1a2e;border-bottom:1px solid #223a54;padding:10px;overflow:auto}
+.top-nav a{color:#a8bdd5;text-decoration:none;font-size:13px;padding:10px 14px;border-radius:9px;white-space:nowrap}
+.top-nav a:first-child,.top-nav a:hover{background:#143d65;color:#67c6ff}
+.wrap{padding-top:24px}.welcome{display:flex;justify-content:space-between;align-items:center;gap:20px;margin:2px 0 22px}.welcome h2{font-size:26px;margin:7px 0}.eyebrow{font-size:11px;letter-spacing:2px;color:#40c5ee;font-weight:700}.quick-refresh{width:auto;padding:12px 18px}
+.card,.panel{background:linear-gradient(160deg,#11263d,#0e1e32);border:1px solid #24425f;border-radius:17px;box-shadow:0 15px 40px #0002}
+.card{min-height:135px;position:relative;overflow:hidden}.card:after{content:' ';position:absolute;width:80px;height:80px;border-radius:100%;right:-20px;top:-35px;background:#18a4f310;box-shadow:0 0 65px #18a4f32b}
+.card:first-child{background:linear-gradient(145deg,#103a52,#0c253e);border-color:#267b9d}
+.label{color:#adc4db}.value{font-size:clamp(22px,2.4vw,31px);letter-spacing:-.7px}
+.analytics{display:grid;grid-template-columns:1fr 1fr;gap:17px}.analysis-card{min-height:330px;margin-top:18px}
+.allocation{display:flex;gap:26px;align-items:center;padding:12px 0}.donut{width:185px;height:185px;flex:none;border-radius:50%;display:grid;place-items:center;position:relative;background:conic-gradient(#30445f 0% 100%)}.donut:before{content:'';position:absolute;inset:29px;background:#102238;border-radius:50%}.donut span{z-index:1;font-size:16px;font-weight:800}
+.legend{flex:1;min-width:0}.legend-row{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid #25405b;font-size:13px}.legend-name{display:flex;align-items:center;gap:9px}.legend-name i{width:9px;height:9px;border-radius:3px;display:inline-block}
+.performance{padding:10px 0}.perf-row{margin-bottom:18px;font-size:13px}.perf-row .row{margin-bottom:7px}.track{height:8px;background:#243c55;border-radius:12px;overflow:hidden}.bar{height:100%;border-radius:12px}.bar.positive{background:linear-gradient(90deg,#147e7e,#28dbac)}.bar.negative{background:linear-gradient(90deg,#a54565,#ff728e)}
+.panel h2{color:#eaf3ff}.chip{background:#183c56;color:#8fddff}.status{border:1px solid #1b3750}
+input,select{background:#0a1a2c;border:1px solid #35506c}button{background:linear-gradient(110deg,#0878c8,#00a5b6)}
+html{scroll-behavior:smooth;scroll-padding-top:15px}
+@media(max-width:760px){.analytics{grid-template-columns:1fr}.top-nav{justify-content:flex-start}.welcome h2{font-size:21px}.quick-refresh{font-size:12px}.allocation{gap:16px}.donut{width:150px;height:150px}.donut:before{inset:25px}.donut span{font-size:13px}}
+@media(max-width:560px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.card{padding:15px;min-height:115px}.value{font-size:20px}.label{font-size:11px}.form{grid-template-columns:repeat(2,minmax(0,1fr))}.form>div[style*="span 3"]{grid-column:span 2!important}.app-header{padding:16px}.live-pill{font-size:10px;padding:6px 8px}.brandmark{width:38px;height:38px}.brand h1{font-size:17px}.wrap{padding:17px 12px}.panel{padding:16px}.welcome{align-items:flex-start}.quick-refresh{padding:9px}.allocation{flex-wrap:wrap;justify-content:center}.legend{min-width:100%;width:100%}}
+</style><script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<style>
+/* Navegação por telas: somente o painel ativo é exibido */
+.top-nav{position:sticky;top:0;z-index:30}
+.top-nav a.active{background:#13568b;color:#fff;box-shadow:inset 0 -3px 0 #34d1ee}
+[data-screen]{display:none!important}
+[data-screen].screen-visible{display:block!important}
+section.grid[data-screen].screen-visible{display:grid!important}
+section.analytics[data-screen].screen-visible{display:grid!important}
+.panel[data-screen].screen-visible{display:block!important}
+.welcome[data-screen].screen-visible{display:flex!important}
+@media(max-width:760px){.top-nav{justify-content:flex-start}}
+</style>
+
+<style id="layout-b-v4">
+:root{--accent:#087cf5;--positive:#00d68b}
+body{padding-bottom:92px!important}
+.app-header-v4{position:sticky;top:0;z-index:90;display:flex;align-items:center;gap:13px;padding:13px 18px;background:#061526f2;border-bottom:1px solid #163451;backdrop-filter:blur(15px)}
+.app-header-v4 .brand{flex:1;min-width:0}.app-header-v4 .brand strong{display:block;font-size:16px;color:#f1f8ff}.app-header-v4 .brand small{display:block;color:#8da8c1;font-size:11px}
+.app-icon-button{border:0;color:#e7f5ff;background:#102c48;border-radius:12px;width:43px;height:43px;font-size:22px;cursor:pointer}
+.bottom-nav-v4{position:fixed;z-index:100;bottom:0;left:0;right:0;background:#061526f7;border-top:1px solid #214363;display:flex;justify-content:space-around;padding:8px 6px max(9px,env(safe-area-inset-bottom));box-shadow:0 -12px 28px #0007}
+.bottom-nav-v4 button{background:none;border:0;color:#96acc4;display:flex;align-items:center;flex-direction:column;gap:4px;min-width:57px;font-size:11px;cursor:pointer}
+.bottom-nav-v4 button .ico{font-size:23px}.bottom-nav-v4 button.selected{color:#1687ff}.bottom-nav-v4 button.action .ico{background:#087cf5;color:white;border-radius:50%;width:47px;height:47px;display:grid;place-items:center;font-size:30px;margin-top:-24px;box-shadow:0 5px 18px #087cf577}
+.drawer-shade-v4{position:fixed;inset:0;z-index:110;background:#000a;display:none}.drawer-shade-v4.open{display:block}
+.drawer-v4{position:fixed;z-index:111;inset:0 auto 0 0;width:min(320px,87vw);background:linear-gradient(160deg,#09213b,#031221);border-right:1px solid #215078;box-shadow:15px 0 45px #0009;transform:translateX(-105%);transition:transform .23s ease;overflow:auto;padding:20px 15px 40px}
+.drawer-v4.open{transform:translateX(0)}
+.drawer-v4 .drawer-top{display:flex;align-items:center;justify-content:space-between;padding:0 6px 18px;color:#fff}
+.drawer-v4 .drawer-title{font-size:19px;font-weight:800}
+.drawer-v4 .drawer-subtitle{font-size:12px;color:#95b0c7;margin-top:4px}
+.drawer-v4 .drawer-summary{padding:15px;margin:5px 0 15px;border:1px solid #174368;background:#0b2a47;border-radius:15px}
+.drawer-v4 .drawer-summary strong{font-size:22px;color:#fff}
+.drawer-v4 .drawer-summary small{display:block;color:#9cb6ca}
+.drawer-v4 .drawer-links{display:grid;gap:5px}
+.drawer-v4 .drawer-links button{border:0;background:transparent;color:#d3e5f4;text-align:left;padding:12px;border-radius:11px;font-size:15px;cursor:pointer}
+.drawer-v4 .drawer-links button.selected{background:#0753ad;color:white}
+.drawer-v4 .drawer-links button span{display:inline-block;width:30px}
+.screen-v4{display:none!important}
+.screen-v4.active-screen-v4{display:block!important}
+section.grid.screen-v4.active-screen-v4,section.analytics.screen-v4.active-screen-v4{display:grid!important}
+.screen-v4.active-screen-v4.welcome{display:flex!important}
+main.wrap{padding-top:20px}
+.screen-title-v4{font-size:24px;color:#f4faff;margin:0 0 16px}
+.tab-v4{display:flex;gap:6px;margin:4px 0 17px}
+.tab-v4 button{flex:1;padding:10px 8px;background:#102c46;border:1px solid #214565;color:#c5d9ec;border-radius:9px;cursor:pointer;font-size:12px}
+.tab-v4 button.selected{background:#0757b9;border-color:#147afa;color:#fff}
+.screen-v4 .panel{margin-bottom:18px}
+@media(min-width:900px){.bottom-nav-v4{max-width:700px;margin:auto;border-radius:18px 18px 0 0}.app-header-v4{padding-inline:max(18px,calc((100vw - 1120px)/2))}}
+</style>
+</head><body><div class="app-header-v4"><button class="app-icon-button" id="openDrawerV4" aria-label="Abrir menu lateral">☰</button><div class="brand"><strong>📊 Minha Carteira B3</strong><small>Invista com mais controle</small></div><button class="app-icon-button" id="refreshV4" aria-label="Atualizar cotações" title="Atualizar cotações">⟳</button></div>
+<div id="drawerShadeV4" class="drawer-shade-v4"></div>
+<aside class="drawer-v4" id="drawerV4" aria-label="Menu lateral"><div class="drawer-top"><div><div class="drawer-title">📊 Minha Carteira B3</div><div class="drawer-subtitle">Seu painel de investimentos</div></div><button class="app-icon-button" id="closeDrawerV4" aria-label="Fechar menu">×</button></div><div class="drawer-summary"><small>Patrimônio atual</small><strong id="drawerTotalV4">—</strong><small id="drawerResultV4">Consulte o Dashboard</small></div><div class="drawer-links" id="drawerLinksV4"></div></aside>
+<nav class="bottom-nav-v4" aria-label="Navegação inferior"><button data-screen-go="resumo"><span class="ico">⌂</span>Início</button><button data-screen-go="carteira"><span class="ico">▤</span>Carteira</button><button data-screen-go="operacoes" class="action"><span class="ico">+</span>Operações</button><button data-screen-go="analises"><span class="ico">▥</span>Análises</button><button id="moreV4"><span class="ico">⋯</span>Mais</button></nav>
+
+<header class="app-header"><div class="brand"><span class="brandmark">▥</span><div><h1>Minha Carteira <span style="color:#37baff">B3</span></h1><p>Seu patrimônio, sob controle</p></div></div><span class="live-pill">● Mercado B3</span></header>
+
+<main class="wrap">
+<div class="welcome"><div><div class="eyebrow">PAINEL DE INVESTIMENTOS</div><h2>Visão geral da carteira</h2><p class="muted">Acompanhe suas posições e tome decisões com mais informação.</p></div><button class="alt quick-refresh" onclick="document.getElementById('refresh').click()" type="button">↻ Atualizar cotações</button></div>
+<div id="resumo"></div>
+<section class="grid">
+<div class="card"><div class="label">Patrimônio atual</div><div class="value" id="wealth">—</div></div>
+<div class="card"><div class="label">Custo das posições</div><div class="value" id="cost">—</div></div>
+<div class="card"><div class="label">Resultado não realizado</div><div class="value" id="unreal">—</div></div>
+<div class="card"><div class="label">Resultado realizado</div><div class="value" id="realized">—</div></div>
+</section>
+<section class="analytics">
+<div class="panel analysis-card"><div class="row"><h2>◈ Distribuição da carteira</h2><span class="chip">Por valor de mercado</span></div><div class="allocation"><div class="donut" id="donut"><span id="donutTotal">—</span></div><div class="legend" id="allocationLegend"></div></div><p class="muted">Somente posições com cotação disponível são consideradas.</p></div>
+<div class="panel analysis-card"><div class="row"><h2>▥ Desempenho por ativo</h2><span class="chip">Resultado não realizado</span></div><div class="performance" id="performance"></div><p class="muted">O gráfico compara o retorno de cada posição com cotação válida. Não representa evolução histórica.</p></div>
+</section>
+<div id="config"></div>
+<section class="panel"><div class="row"><h2>📡 Atualização de cotações</h2><span class="chip" id="last">Sem atualização</span></div>
+<div class="form">
+<div style="grid-column:span 3"><label>Chave brapi.dev (Bearer; opcional para ativos públicos)</label><input id="token" placeholder="Cole sua chave da brapi.dev" type="password"/></div>
+<div><label>Intervalo automático</label><select id="interval"><option value="0">Desativado</option><option value="5">5 minutos</option><option selected="" value="15">15 minutos</option><option value="30">30 minutos</option></select></div>
+<div><button id="refresh">↻ Atualizar agora</button></div><div><button class="alt" id="saveApi">Salvar configurações</button></div>
+</div><div class="status" id="status">Informe seu token, se necessário, e clique em Atualizar agora. A consulta depende da disponibilidade da API e do acesso à internet.</div>
+<p class="muted">As cotações podem ter atraso. O token fica salvo neste navegador; por segurança, para uso permanente o ideal é armazená-lo em um servidor. Evite computadores compartilhados. Se a API bloquear requisições feitas diretamente do arquivo HTML, abra-o por um servidor local ou hospedagem HTTPS. Sem cotação válida, o sistema não inventa preços.</p>
+</section>
+<div id="operacoes"></div><section class="panel"><h2>➕ Registrar compra ou venda</h2><form class="form" id="tradeForm">
+<div><label>Data</label><input id="date" required="" type="date"/></div><div><label>Ticker</label><input id="ticker" maxlength="12" required="" value="AMER3"/></div>
+<div><label>Operação</label><select id="side"><option>Compra</option><option>Venda</option></select></div>
+<div><label>Quantidade</label><input id="qty" min="1" required="" step="1" type="number"/></div>
+<div><label>Preço unitário (R$)</label><input id="price" min="0.01" required="" step="0.0001" type="number"/></div>
+<div><label>Custos/taxas (R$)</label><input id="fees" min="0" required="" step="0.01" type="number" value="0"/></div>
+<div style="grid-column:span 2"><button>Salvar operação</button></div>
+</form><p class="muted">Lance operações em ordem cronológica. O cálculo usa custo médio móvel para operações comuns. Day trade e eventos societários exigem apuração própria.</p></section>
+<div id="carteira"></div><section class="panel"><h2>💼 Posições da carteira</h2><div class="scroll"><table><thead><tr><th>Ativo</th><th>Qtd.</th><th>Preço médio</th><th>Última cotação</th><th>Patrimônio</th><th>Resultado</th><th>Retorno</th><th>Ação</th></tr></thead><tbody id="positions"></tbody></table></div>
+<p class="muted">Cotação manual: utilize o botão “Editar cotação” para lançar um preço de referência, caso a consulta automática não esteja disponível.</p></section>
+<div id="analises"></div><section class="panel"><h2>🎯 Simulador de preço-alvo</h2><div class="form"><div><label>Ativo</label><input id="targetTicker" value="AMER3"/></div><div><label>Preço-alvo (R$)</label><input id="targetPrice" min="0" step="0.01" type="number" value="12"/></div><div><button id="simulate" type="button">Simular</button></div></div><div class="status" id="simulation"></div></section>
+<section class="panel"><h2>🧾 Estimativa de impostos — operações comuns</h2><div class="form"><div><label>Mês de referência</label><input id="taxMonth" type="month"/></div><div><label>Prejuízo acumulado anterior (R$)</label><input id="loss" min="0" step="0.01" type="number" value="0"/></div><div><label>IRRF compensável (R$)</label><input id="withheld" min="0" step="0.01" type="number" value="0"/></div><div><button id="taxCalc" type="button">Calcular estimativa</button></div></div><div class="status" id="taxResult"></div><p class="muted warn">A isenção de até R$ 20 mil em vendas mensais de ações no mercado à vista depende da elegibilidade das operações. O sistema não apura day trade, ETFs, FIIs, BDRs, exterior, eventos societários ou todas as compensações fiscais. Não use esta estimativa como DARF sem conferência profissional.</p></section>
+<section class="panel"><h2>📥 Importação de operações por Excel ou CSV</h2>
+<p class="muted">Compatível com o template: <strong>Data (AAAA-MM-DD), Ticker, Operacao, Quantidade, Preco, Custos</strong>. Aceita .xlsx, .xls e .csv. Faça backup antes de importar. O Excel requer internet para carregar o leitor XLSX; CSV funciona sem ele.</p>
+<div class="form"><div style="grid-column:span 3"><label>Selecione o arquivo</label><input accept=".xlsx,.xls,.csv" id="tradeFile" type="file"/></div><div><label>Modo</label><select id="importMode"><option value="incremental">Adicionar somente novos registros</option><option value="replace">Substituir operações existentes</option></select></div><div><button id="previewImport" type="button">Validar e visualizar</button></div><div><button disabled="" id="commitImport" type="button">Confirmar importação</button></div></div>
+<div class="status" id="importStatus">Nenhum arquivo analisado.</div><div class="scroll"><table><thead><tr><th>Linha</th><th>Data</th><th>Ticker</th><th>Operação</th><th>Quantidade</th><th>Preço</th><th>Custos</th><th>Resultado</th></tr></thead><tbody id="importPreview"></tbody></table></div>
+<p class="muted warn">A deduplicação usa a combinação data + ticker + tipo + quantidade + preço + custos. Duas operações legítimas com esses mesmos dados podem ser confundidas; nesse caso, registre a segunda manualmente. Arquivos com erros não são importados parcialmente.</p></section>
+<section class="panel"><div class="row"><h2>📋 Histórico de operações</h2><div class="actions"><button class="alt" id="export">Exportar backup JSON</button><button class="alt" id="csv">Exportar CSV</button><button class="alt" id="importBtn">Importar backup</button><input accept=".json" hidden="" id="importFile" type="file"/><button class="danger" id="clear">Limpar dados</button></div></div><div class="scroll"><table><thead><tr><th>Data</th><th>Ativo</th><th>Tipo</th><th>Quantidade</th><th>Preço</th><th>Custos</th><th>Total</th><th>Resultado realizado</th><th>Ação</th></tr></thead><tbody id="history"></tbody></table></div></section>
+<p class="muted">Dados salvos no localStorage deste navegador. Faça backups periódicos: limpar o navegador ou usar outro dispositivo pode apagar ou ocultar seus registros. Este painel é informativo e não substitui extratos da corretora nem assessoria tributária.</p>
+</main>
+<script>
+const $=id=>document.getElementById(id), BRL=n=>Number(n).toLocaleString('pt-BR',{style:'currency',currency:'BRL'}), NUM=n=>Number(n).toLocaleString('pt-BR',{maximumFractionDigits:2}), key='carteira-pro-b3-v1';
+let state={trades:[],quotes:{},token:'',interval:15},timer=null;
+try{const saved=JSON.parse(localStorage.getItem(key));if(saved&&Array.isArray(saved.trades))state={...state,...saved}}catch{}
+const persist=()=>localStorage.setItem(key,JSON.stringify(state));
+const safe=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const ticker=s=>String(s).trim().toUpperCase().replace(/[^A-Z0-9]/g,'');
+const sorted=()=>[...state.trades].sort((a,b)=>a.date.localeCompare(b.date)||a.id-b.id);
+function calc(){
+ let positions={}, results={}, perTrade={};
+ for(const t of sorted()){
+  const p=positions[t.ticker]??={qty:0,cost:0};let realized=0;
+  if(t.side==='Compra'){p.qty+=t.qty;p.cost+=t.qty*t.price+t.fees}
+  else{const avg=p.qty? p.cost/p.qty:0;realized=t.qty*t.price-t.fees-t.qty*avg;p.qty-=t.qty;p.cost-=t.qty*avg;if(p.qty===0)p.cost=0;results[t.ticker]=(results[t.ticker]||0)+realized}
+  perTrade[t.id]=realized;
+ }
+ return {positions,results,perTrade};
+}
+function render(){
+ const {positions,results,perTrade}=calc();let wealth=0,cost=0,unreal=0,missing=false;
+ $('positions').innerHTML=Object.entries(positions).filter(([k,p])=>p.qty>0).map(([k,p])=>{
+ const q=state.quotes[k],current=q?.price,known=Number.isFinite(current);let value=known?p.qty*current:null, gain=known?value-p.cost:null;
+ cost+=p.cost;if(known){wealth+=value;unreal+=gain}else missing=true;
+ return `<tr><td><strong>${safe(k)}</strong></td><td>${NUM(p.qty)}</td><td>${BRL(p.cost/p.qty)}</td><td>${known?BRL(current):'Sem cotação'}<br><span class="muted">${q?.source||''}</span></td><td>${known?BRL(value):'—'}</td><td class="${gain>=0?'green':'red'}">${known?BRL(gain):'—'}</td><td>${known?(gain/p.cost*100).toFixed(2)+'%':'—'}</td><td><button class="tiny alt" data-quote="${safe(k)}">Editar cotação</button></td></tr>`
+ }).join('')||'<tr><td colspan="8">Nenhuma posição registrada. Cadastre sua primeira compra acima.</td></tr>';
+ $('wealth').textContent=missing?'Parcial: '+BRL(wealth):BRL(wealth);
+ $('cost').textContent=BRL(cost);$('unreal').textContent=missing?'Parcial: '+BRL(unreal):BRL(unreal);
+ $('realized').textContent=BRL(Object.values(results).reduce((a,b)=>a+b,0));
+ $('history').innerHTML=sorted().slice().reverse().map(t=>`<tr><td>${safe(t.date)}</td><td>${safe(t.ticker)}</td><td>${safe(t.side)}</td><td>${t.qty}</td><td>${BRL(t.price)}</td><td>${BRL(t.fees)}</td><td>${BRL(t.qty*t.price+(t.side==='Compra'?t.fees:-t.fees))}</td><td>${t.side==='Venda'?BRL(perTrade[t.id]):'—'}</td><td><button class="tiny danger" data-del="${t.id}">Excluir</button></td></tr>`).join('')||'<tr><td colspan="9">Nenhuma operação cadastrada.</td></tr>';
+ simulate();
+ renderAnalytics(positions);
+}
+
+function renderAnalytics(positions){
+ const palette=['#29b8ff','#21d5a3','#ffd166','#aa8aff','#ff8a70','#70c7ee','#8bda7d','#fa77a3','#b0c4dc','#c7a06a'];
+ const entries=Object.entries(positions).filter(([k,p])=>p.qty>0&&Number.isFinite(state.quotes[k]?.price)).map(([k,p])=>({k,amount:p.qty*state.quotes[k].price,returnPct:p.cost>0?(p.qty*state.quotes[k].price-p.cost)/p.cost*100:0}));
+ const total=entries.reduce((a,b)=>a+b.amount,0);
+ $('donutTotal').textContent=BRL(total);
+ if(!entries.length){
+  $('donut').style.background='conic-gradient(#30445f 0% 100%)';
+  $('allocationLegend').innerHTML='<p class="muted">Cadastre suas ações e atualize as cotações para visualizar a distribuição.</p>';
+  $('performance').innerHTML='<p class="muted">Os indicadores aparecerão quando houver posições com cotações.</p>';
+  return;
+ }
+ let pos=0,stops=[];
+ entries.sort((a,b)=>b.amount-a.amount).forEach((e,i)=>{const next=pos+e.amount/total*100;stops.push(`${palette[i%palette.length]} ${pos.toFixed(2)}% ${next.toFixed(2)}%`);pos=next});
+ $('donut').style.background='conic-gradient('+stops.join(',')+')';
+ $('allocationLegend').innerHTML=entries.map((e,i)=>`<div class="legend-row"><span class="legend-name"><i style="background:${palette[i%palette.length]}"></i>${safe(e.k)}</span><span>${(e.amount/total*100).toFixed(1)}%</span></div>`).join('');
+ $('performance').innerHTML=entries.map(e=>{const v=Math.max(-100,Math.min(100,e.returnPct)),positive=v>=0;return `<div class="perf-row"><div class="row"><strong>${safe(e.k)}</strong><span class="${positive?'green':'red'}">${positive?'+':''}${e.returnPct.toFixed(2)}%</span></div><div class="track"><div class="bar ${positive?'positive':'negative'}" style="width:${Math.max(2,Math.abs(v))}%"></div></div></div>`}).join('');
+}
+
+function validSequence(trades){
+ let p={};for(const t of [...trades].sort((a,b)=>a.date.localeCompare(b.date)||a.id-b.id)){
+ p[t.ticker]=(p[t.ticker]||0)+(t.side==='Compra'?t.qty:-t.qty);
+ if(p[t.ticker]<0)return false;
+ }return true;
+}
+$('tradeForm').onsubmit=e=>{
+ e.preventDefault();const t={id:Date.now()+Math.random(),date:$('date').value,ticker:ticker($('ticker').value),side:$('side').value,qty:Number($('qty').value),price:Number($('price').value),fees:Number($('fees').value)};
+ if(!t.ticker||!Number.isInteger(t.qty)||t.qty<=0||t.price<=0||t.fees<0){alert('Confira os dados da operação.');return}
+ if(!validSequence([...state.trades,t])){alert('Venda superior à quantidade disponível na data.');return}
+ state.trades.push(t);persist();render();$('qty').value='';$('price').value='';$('fees').value='0';
+};
+$('history').onclick=e=>{let id=e.target.dataset.del;if(!id)return;if(!confirm('Excluir esta operação?'))return;let newer=state.trades.filter(t=>String(t.id)!==id);if(!validSequence(newer)){alert('Exclusão geraria saldo negativo em outra operação.');return}state.trades=newer;persist();render()};
+$('positions').onclick=e=>{const k=e.target.dataset.quote;if(!k)return;let v=prompt(`Cotação manual de ${k} (R$):`,state.quotes[k]?.price||'');if(v===null)return;let n=Number(v.replace(',','.'));if(!(n>0)){alert('Cotação inválida.');return}state.quotes[k]={price:n,source:'Manual',at:new Date().toISOString()};persist();render()};
+async function refresh(){
+ const symbols=Object.keys(calc().positions).filter(k=>calc().positions[k].qty>0);
+ if(!symbols.length){$('status').textContent='Cadastre uma compra para consultar as cotações.';return}
+ $('status').textContent='Consultando cotações...';$('refresh').disabled=true;
+ let ok=[],fail=[];
+ for(const k of symbols){
+  try{
+   const url='https://brapi.dev/api/v2/stocks/quote?symbols='+encodeURIComponent(k);
+   const headers={Accept:'application/json'};
+   if(state.token)headers.Authorization='Bearer '+state.token;
+   const resp=await fetch(url,{headers,signal:AbortSignal.timeout(12000)});
+   if(!resp.ok)throw Error('HTTP '+resp.status+(resp.status===401?' (chave ausente ou inválida)':resp.status===403?' (plano sem acesso)':resp.status===429?' (limite excedido)':''));
+   const data=await resp.json(),v=Number(data.results?.[0]?.data?.regularMarketPrice);
+   if(!Number.isFinite(v)||v<=0)throw Error('cotação indisponível');
+   state.quotes[k]={price:v,source:'brapi.dev',at:new Date().toISOString()};ok.push(k);
+  }catch(e){fail.push(k+': '+e.message)}
+ }
+ persist();render();$('last').textContent='Consulta: '+new Date().toLocaleString('pt-BR');
+ $('status').textContent=`Atualizados: ${ok.join(', ')||'nenhum'}. ${fail.length?'Falhas: '+fail.join(' | '):''}`;
+ $('refresh').disabled=false;
+}
+function configure(){clearInterval(timer);state.interval=Number($('interval').value);state.token=$('token').value.trim();persist();if(state.interval>0)timer=setInterval(refresh,state.interval*60000)}
+$('saveApi').onclick=()=>{configure();$('status').textContent='Configurações salvas. Clique em Atualizar agora para testar.'};
+$('refresh').onclick=refresh;
+function simulate(){
+ const k=ticker($('targetTicker').value),price=Number($('targetPrice').value),p=calc().positions[k];
+ if(!p||p.qty<=0||price<0){$('simulation').textContent='Registre uma compra do ativo para calcular a simulação.';return}
+ const val=p.qty*price,gain=val-p.cost;
+ $('simulation').innerHTML=`<strong>${safe(k)}</strong> · ${NUM(p.qty)} ações · preço-alvo ${BRL(price)}<br>Valor projetado: <strong>${BRL(val)}</strong> · Ganho/perda bruto(a): <strong class="${gain>=0?'green':'red'}">${BRL(gain)}</strong> · Retorno: ${((gain/p.cost)*100).toFixed(2)}% <span class="muted">(antes de tributos)</span>`;
+}
+$('simulate').onclick=simulate;
+function calcTax(){
+ const m=$('taxMonth').value,{perTrade}=calc();const trades=state.trades.filter(t=>t.side==='Venda'&&t.date.startsWith(m));
+ const sales=trades.reduce((a,t)=>a+t.qty*t.price,0),gain=trades.reduce((a,t)=>a+perTrade[t.id],0);
+ const exempt=sales<=20000,loss=Number($('loss').value)||0,withheld=Number($('withheld').value)||0;
+ const taxable=exempt?0:Math.max(0,gain-loss),due=Math.max(0,taxable*.15-withheld);
+ $('taxResult').innerHTML=`Vendas no mês: <strong>${BRL(sales)}</strong> · Resultado: <strong>${BRL(gain)}</strong> · Possível isenção: <strong>${exempt?'Sim, se elegível':'Não'}</strong><br>Base tributável estimada: <strong>${BRL(taxable)}</strong> · IR estimado (15% menos IRRF informado): <strong>${BRL(due)}</strong><br><span class="muted">Prejuízos, ganhos isentos e IRRF devem ser conciliados com os controles fiscais e notas de corretagem. Esta estimativa pressupõe somente operações comuns elegíveis.</span>`;
+}
+$('taxCalc').onclick=calcTax;
+function download(name,content,type){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([content],{type}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+$('export').onclick=()=>download('carteira-b3-backup.json',JSON.stringify({...state,token:''},null,2),'application/json');
+$('csv').onclick=()=>{let lines=['Data;Ticker;Operacao;Quantidade;Preco;Custos',...sorted().map(t=>[t.date,t.ticker,t.side,t.qty,t.price,t.fees].join(';'))];download('operacoes-b3.csv','\ufeff'+lines.join('\n'),'text/csv;charset=utf-8')};
+
+let staged=null;
+function parseCSV(text){
+ const rows=[];let row=[],cell='',quoted=false;
+ text=text.replace(/^\uFEFF/,'');
+ const delimiter=(text.split(/\r?\n/)[0].match(/;/g)||[]).length>=(text.split(/\r?\n/)[0].match(/,/g)||[]).length?';':',';
+ for(let i=0;i<text.length;i++){
+  const c=text[i];if(c==='"'){if(quoted&&text[i+1]==='"'){cell+='"';i++}else quoted=!quoted}
+  else if(c===delimiter&&!quoted){row.push(cell.trim());cell=''}
+  else if((c==='\n'||c==='\r')&&!quoted){if(c==='\r'&&text[i+1]==='\n')i++;row.push(cell.trim());if(row.some(x=>x!==''))rows.push(row);row=[];cell=''}
+  else cell+=c;
+ }
+ if(quoted)throw Error('CSV com aspas não fechadas.');row.push(cell.trim());if(row.some(x=>x!==''))rows.push(row);return rows;
+}
+function normalizedHeader(s){return String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'')}
+function numVal(v){if(typeof v==='number')return v;let x=String(v??'').trim().replace(/R\$/gi,'').replace(/\s/g,'');if(!x)return NaN;if(x.includes(',')&&x.includes('.'))x=x.lastIndexOf(',')>x.lastIndexOf('.')?x.replace(/\./g,'').replace(',','.'):x.replace(/,/g,'');else if(x.includes(','))x=x.replace(',','.');return Number(x)}
+function dateVal(v){
+ if(typeof v==='number'&&window.XLSX){const d=XLSX.SSF.parse_date_code(v);if(d)return `${d.y}-${String(d.m).padStart(2,'0')}-${String(d.d).padStart(2,'0')}`}
+ let x=String(v??'').trim(),m;if(m=x.match(/^(\d{4})-(\d{2})-(\d{2})/))x=`${m[1]}-${m[2]}-${m[3]}`;
+ else if(m=x.match(/^(\d{2})\/(\d{2})\/(\d{4})$/))x=`${m[3]}-${m[2]}-${m[1]}`;
+ else return null;
+ const d=new Date(x+'T12:00:00');return !isNaN(d)&&d.toISOString().slice(0,10)===x?x:null;
+}
+function fingerprint(t){return [t.date,t.ticker,t.side,t.qty,Number(t.price).toFixed(4),Number(t.fees).toFixed(2)].join('|')}
+function checkImport(rows,mode){
+ if(!rows.length)throw Error('Arquivo vazio.');
+ const heads=rows[0].map(normalizedHeader),aliases=[['dataaaaammdd','data'],['ticker','ativo','codigo'],['operacao','tipo'],['quantidade','qtd'],['preco','precounitario','valorunitario'],['custos','taxas','corretagem']];
+ const indices=aliases.map(a=>heads.findIndex(h=>a.includes(h)));if(indices.some(i=>i<0))throw Error('Cabeçalhos inválidos. Necessário: Data, Ticker, Operacao, Quantidade, Preco e Custos.');
+ let parsed=[],errors=[];
+ for(let i=1;i<rows.length;i++){
+  const cells=indices.map(j=>rows[i][j]);if(cells.every(x=>x===null||x===undefined||String(x).trim()===''))continue;
+  const date=dateVal(cells[0]),tick=ticker(cells[1]),side=normalizedHeader(cells[2])==='compra'?'Compra':normalizedHeader(cells[2])==='venda'?'Venda':null,qty=numVal(cells[3]),price=numVal(cells[4]),fees=(cells[5]===null||cells[5]===undefined||String(cells[5]).trim()==='')?0:numVal(cells[5]);
+  if(!date||!tick||!side||!Number.isSafeInteger(qty)||qty<=0||!Number.isFinite(price)||price<=0||!Number.isFinite(fees)||fees<0){errors.push(`Linha ${i+1}: valores inválidos`);continue}
+  parsed.push({date,ticker:tick,side,qty,price,fees,sourceLine:i+1});
+ }
+ if(errors.length)throw Error(errors.slice(0,12).join(' | ')+(errors.length>12?' ...':'') );
+ if(!parsed.length)throw Error('Nenhuma operação encontrada.');
+ let existing=mode==='replace'?[]:[...state.trades],counts={};
+ for(const t of existing){let fp=fingerprint(t);counts[fp]=(counts[fp]||0)+1}
+ let seen={},newOnes=[],skipped=[];
+ for(const t of parsed){let fp=fingerprint(t);seen[fp]=(seen[fp]||0)+1;if(seen[fp]<= (counts[fp]||0)){skipped.push(t);continue}newOnes.push(t)}
+ const baseId=Date.now();let proposed=[...existing,...newOnes.map((t,i)=>({...t,id:baseId+i+i/10000}))];
+ if(!validSequence(proposed))throw Error('Saldo negativo detectado: uma venda ocorre antes de haver quantidade suficiente. Verifique datas, compras anteriores e o modo de importação.');
+ return {parsed,newOnes,skipped,mode,proposed};
+}
+$('previewImport').onclick=async()=>{
+ staged=null;$('commitImport').disabled=true;$('importPreview').innerHTML='';
+ try{
+  const file=$('tradeFile').files[0];if(!file)throw Error('Selecione um arquivo Excel ou CSV.');
+  let rows=[];if(/\.csv$/i.test(file.name)){rows=parseCSV(await file.text())}
+  else if(/\.xlsx?$/i.test(file.name)){if(!window.XLSX)throw Error('Leitor XLSX não carregou. Conecte-se à internet ou salve o arquivo como CSV.');const book=XLSX.read(await file.arrayBuffer(),{type:'array',cellDates:false});rows=XLSX.utils.sheet_to_json(book.Sheets[book.SheetNames[0]],{header:1,defval:''})}
+  else throw Error('Formato não suportado. Use .xlsx, .xls ou .csv.');
+  staged=checkImport(rows,$('importMode').value);
+  $('importStatus').textContent=`Arquivo validado: ${staged.parsed.length} linha(s); ${staged.newOnes.length} nova(s); ${staged.skipped.length} duplicada(s) ignorada(s). Nenhum dado alterado ainda.`;
+  $('importPreview').innerHTML=staged.parsed.slice(0,100).map(t=>`<tr><td>${t.sourceLine}</td><td>${safe(t.date)}</td><td>${safe(t.ticker)}</td><td>${t.side}</td><td>${t.qty}</td><td>${BRL(t.price)}</td><td>${BRL(t.fees)}</td><td>${staged.newOnes.includes(t)?'Adicionar':'Duplicada'}</td></tr>`).join('');
+  $('commitImport').disabled=staged.mode==='incremental'&&staged.newOnes.length===0;
+ }catch(e){$('importStatus').textContent='Erro de validação: '+e.message}
+};
+$('tradeFile').onchange=()=>{staged=null;$('commitImport').disabled=true;$('importStatus').textContent='Arquivo selecionado. Clique em Validar e visualizar.'};
+$('importMode').onchange=()=>{staged=null;$('commitImport').disabled=true;$('importStatus').textContent='Modo alterado. Valide o arquivo novamente.'};
+$('commitImport').onclick=()=>{
+ if(!staged)return;const message=staged.mode==='replace'?'Substituir TODAS as operações atuais pelas operações deste arquivo?':'Adicionar '+staged.newOnes.length+' operações novas à carteira?';
+ if(!confirm(message))return;
+ const previous=state.trades;state.trades=staged.proposed.map(({sourceLine,...t})=>t);
+ try{persist()}catch(e){state.trades=previous;alert('Não foi possível salvar os dados no navegador: '+e.message);return}
+ render();$('importStatus').textContent='Importação concluída: '+staged.newOnes.length+' operação(ões) adicionada(s).';staged=null;$('commitImport').disabled=true;
+};
+
+$('importBtn').onclick=()=>$('importFile').click();
+$('importFile').onchange=async e=>{try{const d=JSON.parse(await e.target.files[0].text());if(!Array.isArray(d.trades)||!validSequence(d.trades))throw Error('Arquivo inválido');if(!confirm('Substituir todos os registros atuais pelo backup?'))return;state={...state,trades:d.trades,quotes:d.quotes||{}};persist();render()}catch(err){alert('Não foi possível importar: '+err.message)}e.target.value=''};
+$('clear').onclick=()=>{if(confirm('Apagar todos os lançamentos e cotações deste navegador?')){state.trades=[];state.quotes={};persist();render()}};
+$('date').value=new Date().toLocaleDateString('en-CA');$('taxMonth').value=new Date().toLocaleDateString('en-CA').slice(0,7);$('token').value=state.token;$('interval').value=String(state.interval);configure();render();
+</script><script>
+if ('serviceWorker' in navigator && (location.protocol==='https:' || location.hostname==='localhost')) {
+  window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(err=>console.warn('Service worker:',err)));
+}
+</script>
+
+
+<script id="navigation-layout-b-v4">
+(function(){
+ const $=s=>document.querySelector(s);
+ const main=$('main.wrap');
+ if(!main)return;
+ const all=Array.from(main.children);
+ const panels=all.filter(el=>el.matches('section.panel'));
+ const find=t=>panels.find(el=>el.querySelector('h2')?.textContent.includes(t));
+ const welcome=$('.welcome'), grid=main.querySelector('section.grid'), analytics=main.querySelector('section.analytics');
+ const groups={
+  resumo:[welcome,grid,analytics],
+  carteira:[find('Posições da carteira')],
+  operacoes:[find('Registrar compra'),find('Importação de operações'),find('Histórico de operações')],
+  analises:[find('Simulador de preço-alvo'),find('Estimativa de impostos')],
+  config:[find('Atualização de cotações')],
+  dividendos:[], metas:[], relatorios:[]
+ };
+ // Unimplemented areas are labeled as upcoming; do not show fabricated figures.
+ const planned={
+  dividendos:'Controle de dividendos e JCP: em desenvolvimento. Os valores não serão estimados sem dados reais.',
+  metas:'Metas e alertas de preços: em desenvolvimento. O aplicativo ainda não envia notificações.',
+  relatorios:'Relatórios avançados: em desenvolvimento. Você já pode exportar seus dados em Operações.'
+ };
+ for(const [name,items] of Object.entries(groups)){
+  for(const el of items.filter(Boolean)){el.classList.add('screen-v4');el.dataset.screenV4=name;}
+ }
+ const extra=document.createElement('section');extra.className='panel screen-v4';extra.id='plannedScreenV4';
+ main.appendChild(extra);
+ const titles={resumo:'Dashboard',carteira:'Carteira',operacoes:'Operações',analises:'Análises',config:'Configurações',dividendos:'Dividendos',metas:'Metas e alertas',relatorios:'Relatórios'};
+ const menu=[['resumo','⌂'],['carteira','▤'],['operacoes','⇄'],['dividendos','◉'],['analises','◷'],['metas','◎'],['relatorios','▤'],['config','⚙']];
+ const links=$('#drawerLinksV4');
+ for(const [key,ico] of menu){
+  const b=document.createElement('button');b.dataset.screenGo=key;b.innerHTML='<span>'+ico+'</span>'+titles[key];links.appendChild(b);
+ }
+ function close(){ $('#drawerV4').classList.remove('open');$('#drawerShadeV4').classList.remove('open');}
+ function open(){ $('#drawerV4').classList.add('open');$('#drawerShadeV4').classList.add('open');}
+ $('#openDrawerV4').onclick=open;$('#moreV4').onclick=open;$('#closeDrawerV4').onclick=close;$('#drawerShadeV4').onclick=close;
+ document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
+ function show(name){
+  if(!titles[name])name='resumo';
+  document.querySelectorAll('.screen-v4').forEach(el=>el.classList.toggle('active-screen-v4',el.dataset.screenV4===name));
+  if(planned[name]){extra.innerHTML='<h2>'+titles[name]+'</h2><p class="muted">'+planned[name]+'</p>';extra.classList.add('active-screen-v4')}
+  else extra.classList.remove('active-screen-v4');
+  document.querySelectorAll('[data-screen-go]').forEach(el=>{const on=el.dataset.screenGo===name;el.classList.toggle('selected',on);if(on)el.setAttribute('aria-current','page');else el.removeAttribute('aria-current')});
+  history.replaceState(null,'','#'+name);close();window.scrollTo(0,0);
+ }
+ document.querySelectorAll('[data-screen-go]').forEach(el=>el.addEventListener('click',()=>show(el.dataset.screenGo)));
+ window.addEventListener('hashchange',()=>show(location.hash.slice(1)));
+ $('#refreshV4').onclick=()=>{show('config'); const b=Array.from(document.querySelectorAll('button')).find(x=>/atualizar agora/i.test(x.textContent));if(b)b.click()};
+ // Reuse existing calculated portfolio values, rather than hard-coded demonstration figures.
+ function syncSummary(){
+  const card=Array.from(document.querySelectorAll('section.grid .card')).find(x=>/patrimônio atual/i.test(x.textContent));
+  if(card){const val=card.querySelector('.value,.big,.num,strong');if(val)$('#drawerTotalV4').textContent=val.textContent.trim()}
+ }
+ const obs=new MutationObserver(syncSummary);
+ if(grid)obs.observe(grid,{subtree:true,childList:true,characterData:true});
+ syncSummary();show(location.hash.slice(1)||'resumo');
+})();
+</script>
+</body></html>
